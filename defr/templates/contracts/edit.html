@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block header%}
+ <h1>{%block title%}Edit{% endblock%}</h1>
+{% endblock %}
+
+{%block content%}
+ <form method="post">
+    <label for="customer_id">Customer ID</label>
+    <input type="number" name="customer_id" id="customer_id" value="{{ contract.customer_id }}" required>
+    <label for="service_id">Service ID</label>
+    <input type="number" name="service_id" id="service_id" value="{{ contract.service_id }}" required>
+    <label for="term">Term</label>
+    <input type="number" name="term" id="term" value="{{ contract.term }}" required>
+    <label for="annual_amount">Annual Amount</label>
+    <input type="number" step="0.01" name="annual_amount" id="annual_amount" value="{{ contract.annual_amount }}" required>
+    <label for="original_start">Original Start Date</label>
+    <input name="original_start" id="original_start" value="{{ contract.original_start }}" required>
+    <label for="current_start">Current Term Start Date</label>
+    <input name="current_start" id="current_start" value="{{ contract.current_start }}" required>
+    <label for="current_end">Current Term End Date</label>
+    <input name="current_end" id="current_end" value="{{ contract.current_end }}" required>
+    <label for="auto_renew">Auto Renew:</label>
+    <input type="checkbox" id="auto_renew" name="auto_renew" {% if contract.auto_renew %}checked{% endif %}>
+    <label for="price_increase">Annual Price Increase</label>
+    <input type="number" name="price_increase" id="price_increase" value="{{ contract.price_increase }}" required>
+    <input type="submit" value="Save">
+ </form>
+ <form action="{{ url_for('contracts.delete', contract_id=contract.contract_id) }}" method="post">
+   <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+ </form>
+{% endblock %}

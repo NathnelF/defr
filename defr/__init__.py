@@ -34,6 +34,15 @@ def create_app(test_config=None):
 
     from . import route
     app.register_blueprint(route.bp)
+
+    from . import auth
+    app.register_blueprint(auth.bp)
+
+    from . import contracts
+    app.register_blueprint(contracts.bp)
+    
+    from . import schedules
+    app.register_blueprint(schedules.bp)
     
     
 

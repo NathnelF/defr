@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header%}
+ <h1>{%block title%}New Contract{% endblock%}</h1>
+{% endblock %}
+
+{%block content%}
+ <form method="post">
+    <label for="customer_id">Customer ID</label>
+    <input type="number" name="customer_id" id="customer_id" value="{{ request.form['customer_id'] }}" required>
+    <label for="service_id">Service ID</label>
+    <input type="number" name="service_id" id="service_id" value="{{ request.form['service_id'] }}" required>
+    <label for="term">Term</label>
+    <input type="number" name="term" id="term" value="{{ request.form['term'] }}" required>
+    <label for="annual_amount">Annual Amount</label>
+    <input type="number" step="0.01" name="annual_amount" id="annual_amount" value="{{ request.form['annual_amount'] }}" required>
+    <label for="original_start">Original Start Date</label>
+    <input name="original_start" id="original_start" value="{{ request.form['original_start'] }}" required>
+    <label for="current_start">Current Term Start Date</label>
+    <input name="current_start" id="current_start" value="{{ request.form['current_start'] }}" required>
+    <label for="current_end">Current Term End Date</label>
+    <input name="current_end" id="current_end" value="{{ request.form['current_end'] }}" required>
+    <label for="auto_renew">Auto Renew:</label>
+    <input type="checkbox" id="auto_renew" name="auto_renew">
+    <label for="price_increase">Annual Price Increase</label>
+    <input type="number" name="price_increase" id="price_increase" value="{{ request.form['price_increase'] }}" required>
+    
+    
+    
+    <input type="submit" value="Save">
+    
+ </form>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{contract.customer.customer_name}} {{contract.service.service_name}} Recognition Schedule{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <table class="recognition-schedule-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Deferred Revenue Increase</th>
+        <th>Deferred Revenue Decrease</th>
+        <th>Income</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for contract in contracts %}
+        <tr>
+          <td>{{ event.date }}</td>
+          <td>{{ event.increase }}</td>
+          <td>{{ event.decrease }}</td>
+          <td>{{ event.income }}</td>
+          <td> {{ event.balance }} </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

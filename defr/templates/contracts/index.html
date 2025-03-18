@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Contracts{% endblock %}</h1>
+  <a class="'action" href="{{ url_for('contracts.create')}}">New Contract</a>
+{% endblock %}
+
+{% block content %}
+  <table class="contracts-table">
+    <thead>
+      <tr>
+        <th>Customer Name</th>
+        <th>Service Name</th>
+        <th>Annual Amount</th>
+        <th>Terms</th>
+        <th>Original Start</th>
+        <th>Current Start</th>
+        <th>Current End</th>
+        <th>Auto Renew</th>
+        <th>Price Increase</th>
+        <th>Churned</th>
+        <th>Actions</th>
+        <th>Schedule</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for contract in contracts %}
+        <tr>
+          <td>{{ contract.customer.customer_name }}</td>
+          <td>{{ contract.service.service_name }}</td>
+          <td>{{ contract.annual_amount }}</td>
+          <td>{{ contract.term }}</td>
+          <td>{{ contract.original_start }}</td>
+          <td>{{ contract.current_start }}</td>
+          <td>{{ contract.current_end }}</td>
+          <td>{{ contract.auto_renew }}</td>
+          <td>{{ contract.price_increase }}</td>
+          <td>{{ contract.churned }}</td>
+          <td>
+            <a class="action" href="{{ url_for('contracts.edit', contract_id=contract.contract_id) }}" class="btn-edit">Edit</a>
+          </td>
+          <td>
+            link
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
