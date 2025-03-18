@@ -3,6 +3,7 @@ from flask import(
 )
 from .tables import db, Contract  # Import the db and models
 from .auth import login_required
+from datetime import datetime
 
 bp = Blueprint('contracts', __name__)
 
@@ -10,7 +11,9 @@ bp = Blueprint('contracts', __name__)
 @login_required
 def index():
     contracts = Contract.query.all()
-    return render_template('contracts/index.html', contracts=contracts)
+    current_month = datetime.now().month
+    current_year = datetime.now().year
+    return render_template('contracts/index.html', contracts=contracts, current_month=current_month, current_year=current_year)
 
 
 @bp.route('/create', methods=('GET', 'POST'))

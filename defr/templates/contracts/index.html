@@ -3,6 +3,7 @@
 {% block header %}
   <h1>{% block title %}Contracts{% endblock %}</h1>
   <a class="'action" href="{{ url_for('contracts.create')}}">New Contract</a>
+  <a class="'action" href="{{ url_for('schedules.monthly_report', month=current_month, year=current_year )}}">Report</a>
 {% endblock %}
 
 {% block content %}
@@ -40,7 +41,7 @@
             <a class="action" href="{{ url_for('contracts.edit', contract_id=contract.contract_id) }}" class="btn-edit">Edit</a>
           </td>
           <td>
-            link
+            <a class="action" href="{{ url_for('schedules.recognition_schedule', contract_id=contract.contract_id )}}" class="btn-schedule">Schedule</a>
           </td>
         </tr>
       {% endfor %}

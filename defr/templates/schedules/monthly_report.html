@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}{{contract.customer.customer_name}} {{contract.service.service_name}} Recognition Schedule{% endblock %}</h1>
+  <h1>{% block title %}Monthly Report for {{month_str}} {{year}} {% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
   <table class="contracts-table">
     <thead>
       <tr>
+        <th>Customer</th>
+        <th>Service</th>
         <th>Date</th>
         <th>Deferred Revenue Increase</th>
         <th>Deferred Revenue Decrease</th>
@@ -18,6 +20,8 @@
     <tbody>
       {% for event in recognition_events %}
         <tr>
+          <td>{{ event.customer.customer_name }}</td>
+          <td>{{ event.service.service_name}}</td>
           <td>{{ event.date }}</td>
           <td>{{ event.increase }}</td>
           <td>{{ event.decrease }}</td>
@@ -27,7 +31,4 @@
       {% endfor %}
     </tbody>
   </table>
-  <form action="{{ url_for('schedules.delete_schedule', contract_id=contract.contract_id) }}" method="post">
-    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-  </form>
 {% endblock %}
