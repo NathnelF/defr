@@ -4,6 +4,10 @@ from flask import(
 from .tables import db, Contract, Customer, Service  # Import the db and models
 from .auth import login_required
 from datetime import datetime
+from .input_validation import valid_date
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 bp = Blueprint('contracts', __name__)
 
@@ -94,10 +98,12 @@ def create():
 @login_required
 def edit(contract_id):
     contract = Contract.query.get_or_404(contract_id)
+    customer = Customer.query.get(contract.customer_id)
+    service = Service.query.get(contract.service_id)
 
     if request.method == 'POST':
-        customer_id = request.form['customer_id']
-        service_id = request.form['service_id']
+        customer_name = request.form['customer_name']
+        service_name = request.form['service_name']
         term = request.form['term']
         annual_amount = request.form['annual_amount']
         original_start = request.form['original_start']
@@ -105,12 +111,15 @@ def edit(contract_id):
         current_end = request.form['current_end']
         auto_renew = 'auto_renew' in request.form 
         price_increase = request.form['price_increase']
+        logging.debug(f"Original start: {original_start}")
+        logging.debug(f"Current start: {current_start}")
+        logging.debug(f"Current end: {current_end}")
         error = None
 
-        if not customer_id:
+        if not customer_name:
             error = 'Customer is required'
 
-        elif not service_id:
+        elif not service_name:
             error = 'Service is required'
 
         elif not annual_amount:
@@ -118,6 +127,41 @@ def edit(contract_id):
         
         elif not term:
             error = 'Term is required'
+
+        #check for date validation
+        if not valid_date(original_start):
+            error = "Please enter a valid date format"
+        
+        if valid_date(current_start) != True:
+            error = "Please enter a valid date format"
+
+        if valid_date(current_end) != True:
+            error = "Please enter a valid date format"
+
+        #check if customer to add exits
+        customer = Customer.query.filter(Customer.customer_name == customer_name).first()
+        if customer:
+            #if it does we get it's id as our new id
+            customer_id = customer.customer_id
+        else:
+            #if it doesn't we add to the customer table and then query it's id
+            new_customer = Customer(customer_name=customer_name)
+            db.session.add(new_customer)
+            db.session.commit()
+            customer = Customer.query.filter(Customer.customer_name == customer_name).first()
+            customer_id = customer.customer_id
+        
+        #lookup service id from name
+        service = Service.query.filter(Service.service_name == service_name).first()
+        if service:
+            service_id = service.service_id
+        else:
+            new_service = Service(service_name=service_name)
+            db.session.add(new_service)
+            db.session.commit()
+            service = Service.query.filter(Service.service_name == service_name).first()
+            service_id = service.service_id
+        
         
         if error is not None:
             flash(error)
@@ -135,7 +179,7 @@ def edit(contract_id):
 
             flash('Created contract successfully')
             return redirect(url_for('contracts.index'))
-    return render_template('contracts/edit.html', contract=contract)
+    return render_template('contracts/edit.html', contract=contract, customer=customer, service=service)
 
 
 @bp.route('/<int:contract_id>/delete', methods=('POST',))

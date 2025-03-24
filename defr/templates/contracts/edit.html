@@ -6,10 +6,10 @@
 
 {%block content%}
  <form method="post">
-    <label for="customer_id">Customer ID</label>
-    <input type="number" name="customer_id" id="customer_id" value="{{ contract.customer_id }}" required>
-    <label for="service_id">Service ID</label>
-    <input type="number" name="service_id" id="service_id" value="{{ contract.service_id }}" required>
+    <label for="customer_name">Customer Name</label>
+    <input name="customer_name" id="customer_name" value="{{ customer.customer_name }}" required>
+    <label for="service_name">Service Name</label>
+    <input name="service_name" id="service_name" value="{{ service.service_name }}" required>
     <label for="term">Term</label>
     <input type="number" name="term" id="term" value="{{ contract.term }}" required>
     <label for="annual_amount">Annual Amount</label>

@@ -17,3 +17,5 @@ test_schema
 defr/filp.py
 
 *.pem
+
+db_backup/
