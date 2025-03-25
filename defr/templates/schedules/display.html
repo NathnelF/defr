@@ -30,4 +30,12 @@
   <form action="{{ url_for('schedules.delete_schedule', contract_id=contract.contract_id) }}" method="post">
     <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
   </form>
+
+  <form action="{{ url_for('schedules.update_schedule', contract_id=contract.contract_id) }}" method="post">
+    <input type="submit" value="Update" >
+  </form>
+
+  <form action="{{ url_for('contracts.edit', contract_id=contract.contract_id) }}" method="get">
+    <input type="submit" value="Edit Contract" >
+  </form>
 {% endblock %}

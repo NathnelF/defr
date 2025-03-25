@@ -111,9 +111,6 @@ def edit(contract_id):
         current_end = request.form['current_end']
         auto_renew = 'auto_renew' in request.form 
         price_increase = request.form['price_increase']
-        logging.debug(f"Original start: {original_start}")
-        logging.debug(f"Current start: {current_start}")
-        logging.debug(f"Current end: {current_end}")
         error = None
 
         if not customer_name:

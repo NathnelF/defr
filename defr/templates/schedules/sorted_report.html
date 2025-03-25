@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Monthly Report for {{month_str}} {{year}} {% endblock %}</h1>
+  <h1>{% block title %}Monthly Report for {{start}} until {{end}} {% endblock %}</h1>
   <form action="{{ url_for('schedules.sort_by_range') }}" method="get">
     <label class="date-label" for="start-date">Start Date</label>
     <input type="date" id="start-date" name="start-date" min="1/1/2010" max="1/1/2040" required>
