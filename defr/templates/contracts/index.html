@@ -18,7 +18,7 @@
         <th>Current Start</th>
         <th>Current End</th>
         <th>Auto Renew</th>
-        <th>Price Increase</th>
+        <th>Price Increase (%)</th>
         <th>Churned</th>
         <th>Actions</th>
         <th>Schedule</th>
@@ -29,11 +29,11 @@
         <tr>
           <td>{{ contract.customer.customer_name }}</td>
           <td>{{ contract.service.service_name }}</td>
-          <td>{{ contract.annual_amount }}</td>
+          <td>{{ "{0:,.2f}".format(contract.annual_amount) }}</td>
           <td>{{ contract.term }}</td>
-          <td>{{ contract.original_start }}</td>
-          <td>{{ contract.current_start }}</td>
-          <td>{{ contract.current_end }}</td>
+          <td>{{ contract.original_start.strftime("%m/%d/%Y").lstrip('0') }}</td>
+          <td>{{ contract.current_start.strftime("%m/%d/%Y").lstrip('0') }}</td>
+          <td>{{ contract.current_end.strftime("%m/%d/%Y").lstrip('0') }}</td>
           <td>{{ contract.auto_renew }}</td>
           <td>{{ contract.price_increase }}</td>
           <td>{{ contract.churned }}</td>
